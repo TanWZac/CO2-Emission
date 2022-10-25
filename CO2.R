@@ -76,6 +76,24 @@ avgEmiCon %>% mutate(Country=fct_reorder(Country, desc(Co2_emmission))) %>%
 qatarCO2 = as.data.frame(co2emi[co2emi$Country=="Qatar",])
 qatarCO2
 qatar = ggplot(qatarCO2, aes(x=Year, y=Co2_emmission, group=1)) + geom_line() + geom_point()+theme_minimal()
+qatar
 # create function to merge 5 country graph together
+lst = c("Trindad and Tobago", "Kuwait", "Bahrain", " United Arab Emirates", "Luxembourg", 
+       "Brunei", "Saudi Arabia", "United States", "Australia")
+get_data = function(a){
+  pass = as.data.frame(co2emi[co2emi$Country==a,])
+  return(pass)
+}
+
+Merge = as.data.frame(co2emi[co2emi$Country=="Qatar",])
+for (i in lst){
+  Merge = rbind(Merge, get_data(i))
+}
+Merge %>% ggplot(aes(x=Year, y= Co2_emmission, fill=Country, group=Country, color = Country)) + 
+  geom_line(size=0.8) + labs(title="Top 10 Countries with highest CO2 Emissions",subtitle = "2005 - 2018") +
+  theme(legend.text=element_text(size=12),legend.justification=c(1,1),legend.position=c(1,1), 
+        panel.background = element_rect(fill = "white", color="white", linetype = "solid"),
+        panel.grid.major = element_line(size = 0.25, linetype = 'solid', colour = "lightgrey"),
+        panel.grid.minor = element_line(size = 0.25, linetype = 'solid',colour = "lightgrey"))
 
 #find top 10 countries with most co2 emmission
