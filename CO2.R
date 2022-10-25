@@ -14,7 +14,7 @@ co2emi = melted
 colnames(co2emi)= c('Country', 'Year', 'Co2_emmission')
 co2emi
 
-totalEmi = ggplot(co2emi, aes(Co2_emmission)) + geom_histogram(bins=30)
+totalEmi = ggplot(co2emi, aes(Co2_emmission)) + geom_histogram(bins=30) # histogram on total emission 
 totalEmi
 
 emiBoxplt = ggplot(co2emi, aes(y=log(Co2_emmission), x=Year)) + geom_boxplot(notch = TRUE, outlier.alpha = 0.1)
@@ -23,7 +23,7 @@ emiBoxplt
 emiScatter = ggplot(co2emi, aes(x=Year, y=log(Co2_emmission))) + geom_point()
 emiScatter
 
-#find top 10 countries with most co2 emmission
+
 TotalEmiYear = aggregate(Co2_emmission ~ Year, co2emi, sum)
 sdEmiYear = aggregate(Co2_emmission ~ Year, co2emi, sd)
 AvgEmiYear = aggregate(Co2_emmission ~ Year, co2emi, mean)
@@ -52,7 +52,7 @@ p = ggplot() +
     theme(legend.text=element_text(size=12),legend.justification=c(1,1),legend.position=c(1,1), 
           panel.background = element_rect(fill = "white", color="white", linetype = "solid"),
           panel.grid.major = element_line(size = 0.5, linetype = 'solid', colour = "grey"),
-          panel.grid.minor = element_line(size = 0.25, linetype = 'solid',colour = "grey"))
+          panel.grid.minor = element_line(size = 0.25, linetype = 'solid',colour = "grey"))   # show standard deviation and mean of CO2
 p
 
 topEmi = aggregate(Co2_emmission~Country, co2emi, sum)
@@ -64,7 +64,7 @@ topEmiCon %>% mutate(Country=fct_reorder(Country, desc(Co2_emmission))) %>%
   ggplot(aes(x=Country, y=Co2_emmission, fill=Country)) + geom_bar(stat='identity') + 
   theme_minimal() +scale_x_discrete(guide = guide_axis(n.dodge=3)) +
   geom_text(aes(label=Co2_emmission), position=position_dodge(width=0.9), vjust=-0.25) + 
-  labs(title="Top 10 CO2 Emmission Countries ")
+  labs(title="Top 10 CO2 Emmission Countries ")   # top 10 countries with highest CO2 emission
 
 avgEmiCon = head(AvgConEmi[order(AvgConEmi$Co2_emmission, decreasing= T),], n = 10)
 avgEmiCon %>% mutate(Country=fct_reorder(Country, desc(Co2_emmission))) %>%
@@ -77,3 +77,5 @@ qatarCO2 = as.data.frame(co2emi[co2emi$Country=="Qatar",])
 qatarCO2
 qatar = ggplot(qatarCO2, aes(x=Year, y=Co2_emmission, group=1)) + geom_line() + geom_point()+theme_minimal()
 # create function to merge 5 country graph together
+
+#find top 10 countries with most co2 emmission
