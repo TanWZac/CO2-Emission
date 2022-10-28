@@ -51,12 +51,12 @@ p = ggplot() +
     scale_color_manual(name="Line", values=c("blue", "red")) + 
     theme(legend.text=element_text(size=12),legend.justification=c(1,1),legend.position=c(1,1), 
           panel.background = element_rect(fill = "white", color="white", linetype = "solid"),
-          panel.grid.major = element_line(size = 0.5, linetype = 'solid', colour = "grey"),
-          panel.grid.minor = element_line(size = 0.25, linetype = 'solid',colour = "grey"))   # show standard deviation and mean of CO2
+          panel.grid.major = element_line(size = 0.5, linetype = 'solid', colour = "lightgrey"),
+          panel.grid.minor = element_line(size = 0.25, linetype = 'solid',colour = "lightgrey"))   # show standard deviation and mean of CO2
 p
 
-topEmi = aggregate(Co2_emission~Country, co2emi, sum)
-AvgConEmi = aggregate(Co2_emission~Country, co2emi, mean)
+topEmi = aggregate(Co2_emission~Country, co2emi, sum)     # Each country Total Emission 
+AvgConEmi = aggregate(Co2_emission~Country, co2emi, mean) # Each country Average Emission
 AvgConEmi$Co2_emission = round(AvgConEmi$Co2_emission,2)
 
 topEmiCon = head(topEmi[order(topEmi$Co2_emission, decreasing= T),], n = 10)
