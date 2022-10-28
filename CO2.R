@@ -71,7 +71,7 @@ avgEmiCon %>% mutate(Country=fct_reorder(Country, desc(Co2_emission))) %>%
   ggplot(aes(x=Country, y=Co2_emission, fill=Country)) + geom_bar(stat='identity') + 
   geom_text(aes(label=Co2_emission), position=position_dodge(width=0.9), vjust=-0.25) + 
   theme_minimal() + scale_x_discrete(guide = guide_axis(n.dodge=3)) +
-  labs(title = "Top 10 Average CO2 emission")
+  labs(title = "Top 10 Average CO2 emission")   # top 10 countries with highest average CO2 emission
 
 qatarCO2 = as.data.frame(co2emi[co2emi$Country=="Qatar",])
 qatarCO2
