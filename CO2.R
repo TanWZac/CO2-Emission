@@ -97,3 +97,16 @@ Merge %>% ggplot(aes(x=Year, y= Co2_emission, fill=Country, group=Country, color
         panel.grid.minor = element_line(size = 0.25, linetype = 'solid',colour = "lightgrey"))
 
 #find top 10 countries with most co2 emission
+
+library(gapminder)
+gap = unique(gapminder[c("country", "continent")])
+df = merge(co2emi, gap, by.x="Country", by.y="country")
+df
+library(treemapify)
+# Treemap
+co2growth = aggregate(Co2_emission~continent, df, mean)
+co2growth$co2_emi = round(co2growth$co2_emi, 2)
+colnames(co2growth) = c("Continent", "co2_emi")
+ggplot(co2growth, aes(area=co2_emi, fill=Continent, label=paste(Continent, co2_emi, sep="\n"))) + geom_treemap()+
+  geom_treemap_text(colour = "white",place = "centre", size = 15) + theme(legend.position = "none")+ 
+  labs(title="Each Continent Average CO2 Emission")
