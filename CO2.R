@@ -30,8 +30,8 @@ AvgEmiYear = aggregate(Co2_emission ~ Year, co2emi, mean)
 
 TotalEmiYearplt = ggplot(TotalEmiYear, aes(x=Year, y=Co2_emission, group=1)) +
   geom_line() + geom_point() + theme_minimal() + 
-  labs(title = "Total CO2 emissions each year (tonnes per person)",subtitle = "2007 - 2018"
-      ,x = "Year", y = "CO2 tonnes per person")
+  labs(title = "Total CO2 emissions each year (tonnes per person)",
+       subtitle = "2007 - 2018", x = "Year", y = "CO2 tonnes per person")
 TotalEmiYearplt
 
 sdEmiYearplt = ggplot(sdEmiYear, aes(x=Year, y=Co2_emission, group=1)) + geom_line() + geom_point() + theme_minimal()
@@ -103,10 +103,10 @@ gap = unique(gapminder[c("country", "continent")])
 df = merge(co2emi, gap, by.x="Country", by.y="country")
 df
 library(treemapify)
-# Treemap
+# Treemap on each continent
 co2growth = aggregate(Co2_emission~continent, df, mean)
 co2growth$co2_emi = round(co2growth$co2_emi, 2)
 colnames(co2growth) = c("Continent", "co2_emi")
 ggplot(co2growth, aes(area=co2_emi, fill=Continent, label=paste(Continent, co2_emi, sep="\n"))) + geom_treemap()+
-  geom_treemap_text(colour = "white",place = "centre", size = 15) + theme(legend.position = "none")+ 
+  geom_treemap_text(colour = "white",place = "centre", size = 15) + theme(legend.position = "none") + 
   labs(title="Each Continent Average CO2 Emission")
