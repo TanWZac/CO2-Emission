@@ -124,6 +124,10 @@ lm(POPCo2$pop~POPCo2$Co2_emission)
 gdp = aggregate(gdpPercap~continent, gapminder, mean)
 gdpCo2 = merge(Pop, gdp, by.x="continent", by.y="continent")
 lm(gdpCo2$pop~gdpCo2$gdpPercap)
-summary(gdpCo2)
 
-co2emi
+Df = merge(co2emi, gapminder, by.x=c("Country", "Year"), by.y=c("country", "year"))
+Df = na.omit(Df)
+summary(Df)
+cor(Df$gdpPercap, Df$pop)
+plot(lm(Co2_emission~lifeExp+pop+gdpPercap, Df))
+
