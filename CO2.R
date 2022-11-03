@@ -119,3 +119,11 @@ cor(PopCo2$pop, PopCo2$co2_emi)
 lm(PopCo2$pop~PopCo2$co2_emi)
 POPCo2 = merge(Pop, co2sum, by.x="continent", by.y="continent")
 lm(POPCo2$pop~POPCo2$Co2_emission)
+
+#gdp and emission
+gdp = aggregate(gdpPercap~continent, gapminder, mean)
+gdpCo2 = merge(Pop, gdp, by.x="continent", by.y="continent")
+lm(gdpCo2$pop~gdpCo2$gdpPercap)
+summary(gdpCo2)
+
+co2emi
