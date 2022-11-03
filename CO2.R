@@ -105,8 +105,17 @@ df
 library(treemapify)
 # Treemap on each continent
 co2growth = aggregate(Co2_emission~continent, df, mean)
-co2growth$co2_emi = round(co2growth$co2_emi, 2)
 colnames(co2growth) = c("Continent", "co2_emi")
+co2growth$co2_emi = round(co2growth$co2_emi, 2)
 ggplot(co2growth, aes(area=co2_emi, fill=Continent, label=paste(Continent, co2_emi, sep="\n"))) + geom_treemap()+
   geom_treemap_text(colour = "white",place = "centre", size = 15) + theme(legend.position = "none") + 
   labs(title="Each Continent Average CO2 Emission")
+
+library(gapminder)
+co2sum = aggregate(Co2_emission~continent, df, sum)
+Pop = aggregate(pop~continent, gapminder, mean)
+PopCo2 = merge(Pop, co2growth, by.x="continent", by.y="Continent")
+cor(PopCo2$pop, PopCo2$co2_emi)
+lm(PopCo2$pop~PopCo2$co2_emi)
+POPCo2 = merge(Pop, co2sum, by.x="continent", by.y="continent")
+lm(POPCo2$pop~POPCo2$Co2_emission)
